@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@ActiveProfiles(value = "dev")
 class WizardServiceTest {
 
     @Mock
@@ -109,7 +107,7 @@ class WizardServiceTest {
         // Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find wizard with Id 1 : (");
+                .hasMessage("Could not find wizard with Id 1 :(");
         verify(this.wizardRepository, times(1)).findById(Mockito.any(Integer.class));
     }
 
@@ -254,7 +252,7 @@ class WizardServiceTest {
         // Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find wizard with Id 3 : (");
+                .hasMessage("Could not find wizard with Id 3 :(");
         assertThat(a.getOwner().getId()).isEqualTo(2);
     }
 
@@ -271,7 +269,7 @@ class WizardServiceTest {
         // Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find artifact with Id 1250808601744904192 : (");
+                .hasMessage("Could not find artifact with Id 1250808601744904192 :(");
     }
 
 }
