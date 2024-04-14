@@ -10,15 +10,16 @@ import java.util.List;
 @Service
 @Transactional
 public class ArtifactService {
+
     private final ArtifactRepository artifactRepository;
 
     private final IdWorker idWorker;
+
 
     public ArtifactService(ArtifactRepository artifactRepository, IdWorker idWorker) {
         this.artifactRepository = artifactRepository;
         this.idWorker = idWorker;
     }
-
 
     public Artifact findById(String artifactId) {
         return this.artifactRepository.findById(artifactId)
@@ -42,9 +43,7 @@ public class ArtifactService {
                     oldArtifact.setImageUrl(update.getImageUrl());
                     return this.artifactRepository.save(oldArtifact);
                 })
-                .orElseThrow(() ->
-                        new ObjectNotFoundException("artifact", artifactId)
-                );
+                .orElseThrow(() -> new ObjectNotFoundException("artifact", artifactId));
     }
 
     public void delete(String artifactId) {
@@ -52,4 +51,5 @@ public class ArtifactService {
                 .orElseThrow(() -> new ObjectNotFoundException("artifact", artifactId));
         this.artifactRepository.deleteById(artifactId);
     }
+
 }

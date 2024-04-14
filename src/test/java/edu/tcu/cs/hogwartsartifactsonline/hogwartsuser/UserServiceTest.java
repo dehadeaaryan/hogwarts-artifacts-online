@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@ActiveProfiles(value = "dev")
 class UserServiceTest {
 
     @Mock
     UserRepository userRepository;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @InjectMocks
     UserService userService;
@@ -119,7 +121,7 @@ class UserServiceTest {
         // Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find user with Id 1 : (");
+                .hasMessage("Could not find user with Id 1 :(");
         verify(this.userRepository, times(1)).findById(Mockito.any(Integer.class));
     }
 
@@ -131,6 +133,8 @@ class UserServiceTest {
         newUser.setPassword("123456");
         newUser.setEnabled(true);
         newUser.setRoles("user");
+
+//        given(this.passwordEncoder.encode(newUser.getPassword())).willReturn("Encoded Password");
         given(this.userRepository.save(newUser)).willReturn(newUser);
 
         // When
@@ -192,7 +196,7 @@ class UserServiceTest {
         // Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find user with Id 1 : (");
+                .hasMessage("Could not find user with Id 1 :(");
         verify(this.userRepository, times(1)).findById(1);
     }
 
@@ -229,7 +233,7 @@ class UserServiceTest {
         // Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find user with Id 1 : (");
+                .hasMessage("Could not find user with Id 1 :(");
         verify(this.userRepository, times(1)).findById(1);
     }
 }
